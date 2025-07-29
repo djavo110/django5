@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            flex-direction: column;
+        }
+        #salon-info, #car-list {
+            display: none;
+            margin-top: 20px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'avtosalon' %}">AVTOSALONLAR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="navbar-brand" href="#">BREND</a>
+                <a class="navbar-brand" href="#">CARS</a>
+                <a class="navbar-brand" href="{% url 'add_car' %}" tabindex="-1" aria-disabled="true">Add car</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <!-- <div class="col-3">
+        <ul class="list-group text-center mt-4">
+            <li class="list-group-item active">Avtosalon</li>
+            {% for item in avto %}
+            <li class="list-group-item"><a href="{% url 'avtosalon' item.pk %}">{{ item.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div> -->
+</div>
+
+<div class="centered">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM8NY41f7_xokq0Ik_UEgysZFgmSejFq5neQ&s" alt="Salon Image" width="500">
+    
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
+        <button class="btn btn-primary me-md-2" onclick="showSalonInfo()" >Avtosalon haqida</button>
+        <!-- <button class="btn btn-secondary" onclick="showCarList()">Mashinalarni ko'rish</button> -->
+    </div>
+</div>
+
+<div class="container" id="salon-info">
+    <div class="alert alert-info">
+        <h4>AUDI Avtosalon haqida</h4>
+            <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXQQCuNMjOOQwM2hYnZepx2PNQ6SyPDRIe_Q&s" width="500" class="img-fluid rounded-start" alt="Salon rasmi">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title">{{ salon.title }}</h4>
+                    <p class="card-text"><strong>Manzil:</strong> {{ salon.address }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ salon.email }}</p>
+                    <p class="card-text"><strong>Telefon:</strong> {{ salon.phone }}</p>
+                    <p class="card-text">{{ salon.context|safe|linebreaks|truncatewords:50 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
+        <!-- <button class="btn btn-primary me-md-2" onclick="showSalonInfo()">Avtosalon haqida</button> -->
+        <button class="btn btn-secondary" onclick="showCarList()">Mashinalarni ko'rish</button>
+    </div>
+</div>
+
+<div class="container" id="car-list">
+    <h4>Mashinalar ro'yxati</h4>
+    {% for item in car %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ item.image.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">Model: {{ item.model }}</p>
+                    <p class="card-text">Narxi: {{ item.price }} so'm</p>
+                    <p class="card-text">Yili: {{ item.year }}</p>
+                    <p class="card-text">Rangi: {{ item.color }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Scripts -->
+<script>
+    function showSalonInfo() {
+        document.getElementById("salon-info").style.display = "block";
+        document.getElementById("car-list").style.display = "none";
+    }
+
+    function showCarList() {
+        document.getElementById("salon-info").style.display = "none";
+        document.getElementById("car-list").style.display = "block";
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
